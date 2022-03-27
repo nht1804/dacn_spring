@@ -16,6 +16,10 @@ public class Role {
         this.roleName = roleName;
         this.roleLevel = roleLevel;
     }
+    public Role() {
+        this.roleName = roleName;
+        this.roleLevel = roleLevel;
+    }
 
     public String getId() {
         return id;
