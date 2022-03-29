@@ -9,9 +9,12 @@ import java.util.Optional;
 
 public interface CarRepository extends MongoRepository<Car,String> {
     @Query("{'manufacturer':?0}")
-    Optional<Car> findByManufacturer(String manufacturer);
+    List<Car> findByManufacturer(String manufacturer);
     @Query("{'carType':?0}")
     List<Car> findByCarType(String carType);
     @Query("{'name':?0}")
     Optional<Car> findByName(String name);
+    @Query("{'status':?0}")
+    List<Car> findByStatus(boolean status);
+
 }

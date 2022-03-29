@@ -1,6 +1,7 @@
 package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Role;
+import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Model.UsersDetail;
 import com.nttu.dacnsv.Repository.RoleRepository;
 import com.nttu.dacnsv.Repository.UserRepository;
@@ -18,27 +19,80 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public ServiceResult getAll() {
+        ServiceResult result = new ServiceResult();
+        result.setData(userRepository.findAll());
+        return result;
     }
 
-    public User insert(User user) {
-        return userRepository.insert(user);
+    public ServiceResult insert(User user) {
+        ServiceResult result = new ServiceResult();
+        User u = userRepository.findByUserName(user.getUserName()).orElse(null);
+        if(u != null){
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("This username is already in use");
+        }
+        else {
+            userRepository.insert(user);
+            result.setStatus(ServiceResult.Status.SUCCESS);
+            result.setMessage("Success");
+        }
+        return result;
     }
 
-    public void update(User user) {
-        userRepository.save(user);
+    public ServiceResult update(User user) {
+        ServiceResult result = new ServiceResult();
+        if(userRepository.findById(user.getId()).isEmpty()){
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("User Not Found");
+        }
+        else{
+            result.setData(userRepository.save(user));
+        }
+        return result;
     }
 
-    public void delete(String id) {
-        userRepository.deleteById(id);
+    public ServiceResult delete(String id) {
+        ServiceResult result = new ServiceResult();
+        User u = userRepository.findById(id).orElse(null);
+        if(u == null){
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("User Not Found");
+        }
+        else{
+            userRepository.delete(u);
+            result.setMessage("Success");
+        }
+        return result;
     }
 
-    public Optional<User> findByUserID(String userID) {
-        return userRepository.findByUserID(userID);
+    public ServiceResult findByUserName(String userName) {
+        ServiceResult result = new ServiceResult();
+        User u = userRepository.findByUserName(userName).orElse(null);
+        if(u == null){
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("UserName Not Found");
+        }
+        else{
+            result.setStatus(ServiceResult.Status.SUCCESS);
+            result.setMessage("Success");
+            result.setData(u);
+        }
+        return result;
     }
 
-    public Optional<User> findById(String id) {
-        return userRepository.findById(id);
+    public ServiceResult findById(String id) {
+        ServiceResult result = new ServiceResult();
+        User u = userRepository.findById(id).orElse(null);
+        if(u == null){
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("UserName Not Found");
+        }
+        else{
+            result.setStatus(ServiceResult.Status.SUCCESS);
+            result.setMessage("Success");
+            result.setData(u);
+        }
+        return result;
     }
 }

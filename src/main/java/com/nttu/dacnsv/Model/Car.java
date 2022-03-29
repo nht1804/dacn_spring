@@ -14,13 +14,15 @@ public class Car {
     private String price;
     private String image;
     private String manufacturer;
+    private Boolean status;
 
-    public Car(String name, String carType, String price, String image, String manufacturer) {
+    public Car(String name, String carType, String price, String image, String manufacturer, Boolean status) {
         this.name = name;
         this.carType = carType;
         this.price = price;
         this.image = image;
         this.manufacturer = manufacturer;
+        this.status = status;
     }
 
     public String getId() {
@@ -69,5 +71,13 @@ public class Car {
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }
