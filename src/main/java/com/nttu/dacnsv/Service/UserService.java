@@ -30,14 +30,17 @@ public class UserService {
     public ServiceResult insert(User user) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findByUserName(user.getUserName()).orElse(null);
-        Role r = roleRepository.findByRoleName("ROLE_USER").orElse(null);
-        UsersDetail infor = new UsersDetail();
         if (u != null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("This username is already in use");
         } else {
+            //add user with role default is ROLE_USER
+            Role r = roleRepository.findByRoleName("ROLE_USER").orElse(null);
             user.setRole(r);
+            //add user with date of birth default is now
+            UsersDetail infor = new UsersDetail();
             user.setInformation(infor);
+            //add user
             userRepository.insert(user);
             result.setMessage("Success");
         }
@@ -50,7 +53,16 @@ public class UserService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("User Not Found");
         } else {
-            result.setMessage("Success");
+            //update role by id for user
+            Role r = roleRepository.findById(user.getRole().getId()).orElse(null);
+            if(r==null){
+                result.setStatus(ServiceResult.Status.FAILED);
+                result.setMessage("Role Not Found");
+            }else {
+                user.setRole(r);
+                userRepository.save(user);
+                result.setMessage("Success");
+            }
         }
         return result;
     }
@@ -87,6 +99,18 @@ public class UserService {
         if (u == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("UserName Not Found");
+        } else {
+            result.setMessage("Success");
+            result.setData(u);
+        }
+        return result;
+    }
+    public ServiceResult findByRoleName(String roleName) {
+        ServiceResult result = new ServiceResult();
+        List<User> u = userRepository.findUserByRoleName(roleName);
+        if (u.isEmpty()) {
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("Role Not Found");
         } else {
             result.setMessage("Success");
             result.setData(u);

@@ -9,4 +9,8 @@ import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByUserName (String userID);
+    @Query("{'role.id':'?0'}}")
+    List<User> findUserByRoleId (String id);
+    @Query("{'role.roleName':'?0'}")
+    List<User> findUserByRoleName (String roleName);
 }

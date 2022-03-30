@@ -1,34 +1,17 @@
 package com.nttu.dacnsv.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mongodb.MongoException;
-import com.nttu.dacnsv.Model.Role;
 import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Model.User;
-import com.nttu.dacnsv.Model.UsersDetail;
-import com.nttu.dacnsv.Service.RoleService;
 import com.nttu.dacnsv.Service.UserService;
-import com.nttu.dacnsv.Test;
 import lombok.AllArgsConstructor;
-import org.bson.json.Converter;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/User")
 @AllArgsConstructor
 public class UserController {
     public final UserService userService;
-    private Test test;
 
     @GetMapping //Get all user from database
     public ResponseEntity<ServiceResult> getAllUsers() {
@@ -40,9 +23,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findByUserName(userName));
     }
 
-    @GetMapping("/id/{id}") //find user by "userName" in database
+    @GetMapping("/id/{id}") //find user by "id" in database
     public ResponseEntity<ServiceResult> findUserById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(userService.findById(id));
+    }
+    @GetMapping("/role/{roleName}") //find user by "roleName" in database
+    public ResponseEntity<ServiceResult> findUserByRoleName(@PathVariable("roleName") String roleName) {
+        return ResponseEntity.ok().body(userService.findByRoleName(roleName));
     }
 
     @PostMapping //add a user to database

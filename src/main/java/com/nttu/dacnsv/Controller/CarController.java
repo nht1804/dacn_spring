@@ -3,7 +3,6 @@ package com.nttu.dacnsv.Controller;
 import com.nttu.dacnsv.Model.Car;
 import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Service.CarService;
-import com.nttu.dacnsv.Test;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class CarController {
     private final CarService carService;
-    private Test test;
 
     @GetMapping //get all car from database
     public ResponseEntity<ServiceResult> getAllCar() {

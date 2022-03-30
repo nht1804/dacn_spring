@@ -3,7 +3,6 @@ package com.nttu.dacnsv.Controller;
 import com.nttu.dacnsv.Model.Role;
 import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Service.RoleService;
-import com.nttu.dacnsv.Test;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RoleController {
     private final RoleService roleService;
-    private Test test;
-
     @GetMapping
     public ResponseEntity<ServiceResult> getRoles() {
         return ResponseEntity.ok().body(roleService.getAll());

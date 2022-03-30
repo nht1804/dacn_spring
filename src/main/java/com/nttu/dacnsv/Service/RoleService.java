@@ -1,18 +1,21 @@
 package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Role;
+import com.nttu.dacnsv.Model.User;
 import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Repository.RoleRepository;
+import com.nttu.dacnsv.Repository.UserRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class RoleService {
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     public ServiceResult insert(Role role) {
         ServiceResult result = new ServiceResult();
@@ -40,6 +43,14 @@ public class RoleService {
             result.setMessage("Role Not Found");
         } else {
             roleRepository.save(role);
+            //update user with this role id
+            List<User> u = userRepository.findUserByRoleId(role.getId());
+            if (!u.isEmpty()) {
+                u.forEach(e -> {
+                    e.setRole(role);
+                    userRepository.save(e);
+                });
+            }
             result.setMessage("Success");
         }
         return result;

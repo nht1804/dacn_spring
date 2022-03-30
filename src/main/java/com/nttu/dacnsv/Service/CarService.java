@@ -13,7 +13,6 @@ import java.util.List;
 public class CarService {
     private final CarRepository carRepository;
 
-
     public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
         result.setData(carRepository.findAll());
@@ -77,7 +76,7 @@ public class CarService {
     public ServiceResult findByManufacturer(String manufacturer) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByManufacturer(manufacturer);
-        if (c == null) {
+        if (c.isEmpty()) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
         } else {
@@ -90,7 +89,7 @@ public class CarService {
     public ServiceResult findByCarType(String carType) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByCarType(carType);
-        if (c == null) {
+        if (c.isEmpty()) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
         } else {
@@ -116,7 +115,7 @@ public class CarService {
     public ServiceResult findByStatus(boolean status) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByStatus(status);
-        if (c == null) {
+        if (c.isEmpty()) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
         } else {
