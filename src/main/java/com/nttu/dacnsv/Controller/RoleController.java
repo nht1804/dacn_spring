@@ -22,21 +22,26 @@ public class RoleController {
 
     @PostMapping //insert a role to database
     public ResponseEntity<ServiceResult> insertRole(@RequestBody Role role) {
-                return ResponseEntity.ok().body(roleService.insert(role));
+        return ResponseEntity.ok().body(roleService.insert(role));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<ServiceResult> findByRoleName(@PathVariable("name") String name) {
-            return ResponseEntity.ok().body(roleService.findByName(name));
+        return ResponseEntity.ok().body(roleService.findByName(name));
+    }
+
+    @GetMapping("/level/{level}")
+    public ResponseEntity<ServiceResult> findByRoleLevel(@PathVariable("level") int level) {
+        return ResponseEntity.ok().body(roleService.findByLevel(level));
     }
 
     @PutMapping //update a role
     public ResponseEntity<ServiceResult> updateRole(@RequestBody Role role) {
-                return ResponseEntity.ok().body(roleService.update(role));
+        return ResponseEntity.ok().body(roleService.update(role));
     }
 
     @DeleteMapping //Delete a role
     public ResponseEntity<ServiceResult> deleteRole(@RequestBody String id) {
-                return ResponseEntity.ok().body(roleService.delete(id));
+        return ResponseEntity.ok().body(roleService.delete(id));
     }
 }

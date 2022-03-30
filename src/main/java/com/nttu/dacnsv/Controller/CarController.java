@@ -1,4 +1,5 @@
 package com.nttu.dacnsv.Controller;
+
 import com.nttu.dacnsv.Model.Car;
 import com.nttu.dacnsv.Model.ServiceResult;
 import com.nttu.dacnsv.Service.CarService;
@@ -33,6 +34,16 @@ public class CarController {
     @GetMapping("/status/{status}")
     public ResponseEntity<ServiceResult> findCarByStatus(@PathVariable("status") boolean status) {
         return ResponseEntity.ok().body(carService.findByStatus(status));
+    }
+
+    @GetMapping("/manufacturer/{manufacturer}")
+    public ResponseEntity<ServiceResult> findCarByStatus(@PathVariable("manufacturer") String manufacturer) {
+        return ResponseEntity.ok().body(carService.findByManufacturer(manufacturer));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ServiceResult> findCarById(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(carService.findById(id));
     }
 
     @PostMapping //insert a car to database

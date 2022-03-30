@@ -40,6 +40,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findByUserName(userName));
     }
 
+    @GetMapping("/id/{id}") //find user by "userName" in database
+    public ResponseEntity<ServiceResult> findUserById(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(userService.findById(id));
+    }
+
     @PostMapping //add a user to database
     public ResponseEntity<ServiceResult> addUser(@RequestBody User users) {
         return ResponseEntity.ok().body(userService.insert(users));
@@ -52,6 +57,6 @@ public class UserController {
 
     @PutMapping //update a user
     public ResponseEntity<ServiceResult> updateUser(@RequestBody User user) {
-            return ResponseEntity.ok().body(userService.update(user));
+        return ResponseEntity.ok().body(userService.update(user));
     }
 }

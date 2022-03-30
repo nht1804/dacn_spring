@@ -14,7 +14,7 @@ public class CarService {
     private final CarRepository carRepository;
 
 
-    public ServiceResult getAll(){
+    public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
         result.setData(carRepository.findAll());
         return result;
@@ -23,28 +23,24 @@ public class CarService {
     public ServiceResult insert(Car car) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findByName(car.getName()).orElse(null);
-        if (c != null){
+        if (c != null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("This Car is already in database");
-        }
-        else {
+        } else {
             carRepository.insert(car);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
     }
 
-    public ServiceResult update(Car car){
+    public ServiceResult update(Car car) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findById(car.getId()).orElse(null);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Car Not Found");
-        }
-        else {
+        } else {
             carRepository.save(car);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
@@ -52,89 +48,78 @@ public class CarService {
 
     }
 
-    public ServiceResult delete(String id){
+    public ServiceResult delete(String id) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findById(id).orElse(null);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Car Not Found");
-        }
-        else {
+        } else {
             carRepository.delete(c);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
     }
 
-    public ServiceResult findById(String id){
+    public ServiceResult findById(String id) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findById(id).orElse(null);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Car Not Found");
-        }
-        else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(carRepository.findById(id));
         }
         return result;
     }
 
-    public ServiceResult findByManufacturer(String manufacturer){
+    public ServiceResult findByManufacturer(String manufacturer) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByManufacturer(manufacturer);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
-        }
-        else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(c);
         }
         return result;
     }
 
-    public ServiceResult findByCarType(String carType){
+    public ServiceResult findByCarType(String carType) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByCarType(carType);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
-        }
-        else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(c);
         }
         return result;
     }
 
-    public ServiceResult findByName(String name){
+    public ServiceResult findByName(String name) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findByName(name).orElse(null);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
-        }
-        else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(c);
         }
         return result;
     }
-    public ServiceResult findByStatus(boolean status){
+
+    public ServiceResult findByStatus(boolean status) {
         ServiceResult result = new ServiceResult();
         List<Car> c = carRepository.findByStatus(status);
-        if (c == null){
+        if (c == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
-        }
-        else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(c);
         }

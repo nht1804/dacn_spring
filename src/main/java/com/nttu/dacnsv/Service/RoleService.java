@@ -22,7 +22,6 @@ public class RoleService {
             result.setMessage("This RoleName is already in database");
         } else {
             roleRepository.insert(role);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
@@ -41,7 +40,6 @@ public class RoleService {
             result.setMessage("Role Not Found");
         } else {
             roleRepository.save(role);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
@@ -55,7 +53,6 @@ public class RoleService {
             result.setMessage("Role Not Found");
         } else {
             roleRepository.delete(r);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
@@ -68,7 +65,6 @@ public class RoleService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Role Not Found");
         } else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
             result.setData(r);
         }
@@ -82,7 +78,6 @@ public class RoleService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Role Level Not Found");
         } else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
             result.setData(r);
         }
@@ -97,7 +92,6 @@ public class RoleService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Role Name Not Found");
         } else {
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
             result.setData(r);
         }

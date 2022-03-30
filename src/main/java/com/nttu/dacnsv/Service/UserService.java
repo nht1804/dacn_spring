@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
@@ -28,13 +30,15 @@ public class UserService {
     public ServiceResult insert(User user) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findByUserName(user.getUserName()).orElse(null);
-        if(u != null){
+        Role r = roleRepository.findByRoleName("ROLE_USER").orElse(null);
+        UsersDetail infor = new UsersDetail();
+        if (u != null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("This username is already in use");
-        }
-        else {
+        } else {
+            user.setRole(r);
+            user.setInformation(infor);
             userRepository.insert(user);
-            result.setStatus(ServiceResult.Status.SUCCESS);
             result.setMessage("Success");
         }
         return result;
@@ -42,12 +46,11 @@ public class UserService {
 
     public ServiceResult update(User user) {
         ServiceResult result = new ServiceResult();
-        if(userRepository.findById(user.getId()).isEmpty()){
+        if (userRepository.findById(user.getId()).isEmpty()) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("User Not Found");
-        }
-        else{
-            result.setData(userRepository.save(user));
+        } else {
+            result.setMessage("Success");
         }
         return result;
     }
@@ -55,11 +58,10 @@ public class UserService {
     public ServiceResult delete(String id) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findById(id).orElse(null);
-        if(u == null){
+        if (u == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("User Not Found");
-        }
-        else{
+        } else {
             userRepository.delete(u);
             result.setMessage("Success");
         }
@@ -69,12 +71,10 @@ public class UserService {
     public ServiceResult findByUserName(String userName) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findByUserName(userName).orElse(null);
-        if(u == null){
+        if (u == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("UserName Not Found");
-        }
-        else{
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(u);
         }
@@ -84,12 +84,10 @@ public class UserService {
     public ServiceResult findById(String id) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findById(id).orElse(null);
-        if(u == null){
+        if (u == null) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("UserName Not Found");
-        }
-        else{
-            result.setStatus(ServiceResult.Status.SUCCESS);
+        } else {
             result.setMessage("Success");
             result.setData(u);
         }
