@@ -1,12 +1,14 @@
 package com.nttu.dacnsv.Controller;
 
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.DeleteByIdRequest;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Model.User;
 import com.nttu.dacnsv.Service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/User")
 @AllArgsConstructor
@@ -38,8 +40,8 @@ public class UserController {
     }
 
     @DeleteMapping //Delete a user by ID(string)
-    public ResponseEntity<ServiceResult> deleteUser(@RequestBody String id) {
-        return ResponseEntity.ok().body(userService.delete(id));
+    public ResponseEntity<ServiceResult> deleteUser(@RequestBody DeleteByIdRequest request) {
+        return ResponseEntity.ok().body(userService.delete(request.getId()));
     }
 
     @PutMapping //update a user

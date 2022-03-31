@@ -2,7 +2,7 @@ package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Role;
 import com.nttu.dacnsv.Model.User;
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Repository.RoleRepository;
 import com.nttu.dacnsv.Repository.UserRepository;
 

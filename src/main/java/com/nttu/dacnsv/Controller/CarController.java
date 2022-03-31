@@ -1,12 +1,14 @@
 package com.nttu.dacnsv.Controller;
 
 import com.nttu.dacnsv.Model.Car;
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.DeleteByIdRequest;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Service.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/Car")
 @AllArgsConstructor
@@ -55,7 +57,7 @@ public class CarController {
     }
 
     @DeleteMapping //delete a car
-    public ResponseEntity<ServiceResult> deleteCar(@RequestBody String id) {
-        return ResponseEntity.ok().body(carService.delete(id));
+    public ResponseEntity<ServiceResult> deleteCar(@RequestBody DeleteByIdRequest request) {
+        return ResponseEntity.ok().body(carService.delete(request.getId()));
     }
 }

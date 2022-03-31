@@ -1,7 +1,7 @@
 package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Car;
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Repository.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

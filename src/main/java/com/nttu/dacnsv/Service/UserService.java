@@ -1,19 +1,15 @@
 package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Role;
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Model.UsersDetail;
 import com.nttu.dacnsv.Repository.RoleRepository;
 import com.nttu.dacnsv.Repository.UserRepository;
 import com.nttu.dacnsv.Model.User;
 import lombok.AllArgsConstructor;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

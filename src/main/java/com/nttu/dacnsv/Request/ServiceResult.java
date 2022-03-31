@@ -1,4 +1,4 @@
-package com.nttu.dacnsv.Model;
+package com.nttu.dacnsv.Request;
 
 public class ServiceResult {
     private Status status = Status.SUCCESS;

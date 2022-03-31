@@ -1,12 +1,14 @@
 package com.nttu.dacnsv.Controller;
 
 import com.nttu.dacnsv.Model.Role;
-import com.nttu.dacnsv.Model.ServiceResult;
+import com.nttu.dacnsv.Request.DeleteByIdRequest;
+import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/Role")
 @AllArgsConstructor
@@ -38,7 +40,7 @@ public class RoleController {
     }
 
     @DeleteMapping //Delete a role
-    public ResponseEntity<ServiceResult> deleteRole(@RequestBody String id) {
-        return ResponseEntity.ok().body(roleService.delete(id));
+    public ResponseEntity<ServiceResult> deleteRole(@RequestBody DeleteByIdRequest request) {
+        return ResponseEntity.ok().body(roleService.delete(request.getId()));
     }
 }
