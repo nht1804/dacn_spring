@@ -34,6 +34,11 @@ public class RoleController {
         return ResponseEntity.ok().body(roleService.findByLevel(level));
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ServiceResult> findByRoleID(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(roleService.findByID(id));
+    }
+
     @PutMapping //update a role
     public ResponseEntity<ServiceResult> updateRole(@RequestBody Role role) {
         return ResponseEntity.ok().body(roleService.update(role));
