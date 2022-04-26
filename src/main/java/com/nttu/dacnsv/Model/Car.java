@@ -4,27 +4,28 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document(collection = "Car")
 public class Car {
     @Id
     private String id;
     private String name;
-    private String carType;
     private String price;
-    private String image;
-    private String manufacturer;
+    private CarDetail detail;
+    private List<String> image;
     private Boolean status;
+    private int count;
 
-    public Car(String name, String carType, String price, String image, String manufacturer, Boolean status) {
+    public Car(String name, String price, CarDetail detail, List<String> image, Boolean status) {
         this.name = name;
-        this.carType = carType;
         this.price = price;
+        this.detail = detail;
         this.image = image;
-        this.manufacturer = manufacturer;
         this.status = status;
+        this.count = 0;
     }
-
     public String getId() {
         return id;
     }
@@ -41,14 +42,6 @@ public class Car {
         this.name = name;
     }
 
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
     public String getPrice() {
         return price;
     }
@@ -57,20 +50,20 @@ public class Car {
         this.price = price;
     }
 
-    public String getImage() {
+    public CarDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(CarDetail detail) {
+        this.detail = detail;
+    }
+
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(List<String> image) {
         this.image = image;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public Boolean getStatus() {
@@ -79,5 +72,13 @@ public class Car {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

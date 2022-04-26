@@ -25,12 +25,6 @@ public class CarController {
         return ResponseEntity.ok().body(carService.findByName(name));
     }
 
-    @GetMapping("/type/{type}") //find a car by type in database
-    public ResponseEntity<ServiceResult> findCarByType(@PathVariable("type") String type) {
-        return ResponseEntity.ok().body(carService.findByCarType(type));
-
-    }
-
     @GetMapping("/status/{status}")
     public ResponseEntity<ServiceResult> findCarByStatus(@PathVariable("status") boolean status) {
         return ResponseEntity.ok().body(carService.findByStatus(status));
@@ -40,7 +34,18 @@ public class CarController {
     public ResponseEntity<ServiceResult> findCarByStatus(@PathVariable("manufacturer") String manufacturer) {
         return ResponseEntity.ok().body(carService.findByManufacturer(manufacturer));
     }
-
+    @GetMapping("/hasDriver/{hasDriver}")
+    public ResponseEntity<ServiceResult> findCarByHasDriver(@PathVariable("hasDriver") boolean hasDriver) {
+        return ResponseEntity.ok().body(carService.findByHasDriver(hasDriver));
+    }
+    @GetMapping("/seat/{seat}")
+    public ResponseEntity<ServiceResult> findCarByHasDriver(@PathVariable("seat") int seat) {
+        return ResponseEntity.ok().body(carService.findBySeat(seat));
+    }
+    @GetMapping("/transmission/{transmission}")
+    public ResponseEntity<ServiceResult> findCarByTransmission(@PathVariable("seat") String transmission) {
+        return ResponseEntity.ok().body(carService.findByTransmission(transmission));
+    }
     @GetMapping("/id/{id}")
     public ResponseEntity<ServiceResult> findCarById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(carService.findById(id));

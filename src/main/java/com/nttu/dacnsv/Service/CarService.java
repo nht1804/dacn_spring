@@ -43,8 +43,6 @@ public class CarService {
             result.setMessage("Success");
         }
         return result;
-
-
     }
 
     public ServiceResult delete(String id) {
@@ -86,9 +84,9 @@ public class CarService {
         return result;
     }
 
-    public ServiceResult findByCarType(String carType) {
+    public ServiceResult findBySeat(int number) {
         ServiceResult result = new ServiceResult();
-        List<Car> c = carRepository.findByCarType(carType);
+        List<Car> c = carRepository.findBySeats(number);
         if (c.isEmpty()) {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Manufacturer Not Found");
@@ -99,6 +97,43 @@ public class CarService {
         return result;
     }
 
+    public ServiceResult findByHasDriver(boolean hasDriver) {
+        ServiceResult result = new ServiceResult();
+        List<Car> c = carRepository.findByHasDriver(hasDriver);
+        if (c.isEmpty()) {
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("Not Found");
+        } else {
+            result.setMessage("Success");
+            result.setData(c);
+        }
+        return result;
+    }
+
+    public ServiceResult findByTransmission(String transmission) {
+        ServiceResult result = new ServiceResult();
+        List<Car> c = carRepository.findByTransmission(transmission);
+        if (c.isEmpty()) {
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("Not Found");
+        } else {
+            result.setMessage("Success");
+            result.setData(c);
+        }
+        return result;
+    }
+    public ServiceResult findByPrice(String price) {
+        ServiceResult result = new ServiceResult();
+        List<Car> c = carRepository.findByPrice(price);
+        if (c.isEmpty()) {
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("Not Found");
+        } else {
+            result.setMessage("Success");
+            result.setData(c);
+        }
+        return result;
+    }
     public ServiceResult findByName(String name) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findByName(name).orElse(null);
