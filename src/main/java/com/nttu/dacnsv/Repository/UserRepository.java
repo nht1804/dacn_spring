@@ -13,4 +13,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     List<User> findUserByRoleId (String id);
     @Query("{'role.roleName':'?0'}")
     List<User> findUserByRoleName (String roleName);
+    @Query("{'userName':'?0','password':'?1'}")
+    Optional<User> findByUserNameAndPassword(String userName, String password);
 }

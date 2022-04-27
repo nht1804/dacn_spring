@@ -5,7 +5,7 @@ public class ServiceResult {
     private String message;
     private Object data;
     public enum Status {
-        SUCCESS, FAILED;
+        SUCCESS, FAILED, ERROR;
     }
 
     public Status getStatus() {
