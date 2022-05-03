@@ -52,10 +52,10 @@ public class UserService {
         } else {
             //update role by id for user
             Role r = roleRepository.findById(user.getRole().getId()).orElse(null);
-            if(r==null){
+            if (r == null) {
                 result.setStatus(ServiceResult.Status.FAILED);
                 result.setMessage("Role Not Found");
-            }else {
+            } else {
                 user.setRole(r);
                 userRepository.save(user);
                 result.setMessage("Success");
@@ -84,6 +84,7 @@ public class UserService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("UserName Not Found");
         } else {
+            u.setPassword(null);
             result.setMessage("Success");
             result.setData(u);
         }
@@ -97,11 +98,13 @@ public class UserService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("UserName Not Found");
         } else {
+            u.setPassword(null);
             result.setMessage("Success");
             result.setData(u);
         }
         return result;
     }
+
     public ServiceResult findByRoleName(String roleName) {
         ServiceResult result = new ServiceResult();
         List<User> u = userRepository.findUserByRoleName(roleName);
@@ -109,6 +112,9 @@ public class UserService {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("Role Not Found");
         } else {
+            u.forEach(x -> {
+                x.setPassword(null);
+            });
             result.setMessage("Success");
             result.setData(u);
         }

@@ -1,14 +1,17 @@
 package com.nttu.dacnsv.Model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data @Document(collection = "Users")
+@Data
+@Document(collection = "Users")
 public class User {
     @Id
     private String id;
     private String userName;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
     private Role role;
     private UsersDetail information;

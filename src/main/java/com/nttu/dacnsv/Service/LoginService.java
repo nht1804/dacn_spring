@@ -18,18 +18,15 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Timer;
 
 
 @Service
 @AllArgsConstructor
-public class LoginService{
+public class LoginService {
     private final UserRepository userRepository;
     private final String SECRET_KEY = "jlkljkjadywabdsakschasgywadio";
-    private final int EXPIRE_TIME = 60000;//milliseconds(60 seconds)
+    private final int EXPIRE_TIME = 60000 * 5;//milliseconds(60 seconds)
     private final String USERNAME = "userName";
-    private final String ROLE = "roleName";
 
     public ServiceResult login(String userName, String password) {
         ServiceResult result = new ServiceResult();
@@ -38,8 +35,8 @@ public class LoginService{
             try {
                 Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
                 String token = JWT.create()
-                        .withClaim(USERNAME,u.getUserName())
-                        .withClaim(ROLE,u.getRole().getRoleName())
+                        .withKeyId(u.getId())
+                        .withIssuer(u.getUserName())
                         .withIssuedAt(new Date())
                         .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRE_TIME))
                         .sign(algorithm);
@@ -62,37 +59,38 @@ public class LoginService{
 
     public ServiceResult checkLoginToken(String token) {
         ServiceResult result = new ServiceResult();
-        if(token!=null){
+        if (token != null) {
             try {
                 Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
                 //Verify token
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT jwt = verifier.verify(token);
                 //get value name(username)
-                String userName = jwt.getClaim("userName").asString();
+                String userName = jwt.getIssuer();
                 //find user with value(username)
                 User u = userRepository.findByUserName(userName).orElse(null);
-                if(u!=null){
+                if (u != null) {
                     result.setMessage("Login Success");
-                }else{
+                    u.setPassword(null);
+                    result.setData(u);
+                } else {
                     result.setStatus(ServiceResult.Status.FAILED);
                     result.setMessage("Can't not find this user");
                 }
             } catch (UnsupportedEncodingException e) {
-                result.setStatus(ServiceResult.Status.FAILED);
+                result.setStatus(ServiceResult.Status.ERROR);
                 result.setMessage(e.toString());
-            } catch (JWTDecodeException e){
+            } catch (JWTDecodeException e) {
+                result.setStatus(ServiceResult.Status.ERROR);
+                result.setMessage(e.toString());
+            } catch (SignatureVerificationException e) {
+                result.setStatus(ServiceResult.Status.ERROR);
+                result.setMessage(e.toString());
+            } catch (TokenExpiredException e) {
                 result.setStatus(ServiceResult.Status.ERROR);
                 result.setMessage(e.toString());
             }
-            catch (SignatureVerificationException e){
-                result.setStatus(ServiceResult.Status.ERROR);
-                result.setMessage(e.toString());
-            }catch (TokenExpiredException e){
-                result.setStatus(ServiceResult.Status.ERROR);
-                result.setMessage(e.toString());
-            }
-        }else{
+        } else {
             result.setStatus(ServiceResult.Status.FAILED);
             result.setMessage("The token is incorrect.");
         }
