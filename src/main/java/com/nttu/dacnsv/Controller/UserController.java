@@ -48,4 +48,9 @@ public class UserController {
     public ResponseEntity<ServiceResult> updateUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.update(user));
     }
+
+    @PutMapping("/detail") //update information of user
+    public ResponseEntity<ServiceResult> updateUserInformation(@RequestBody User user) {
+        return ResponseEntity.ok().body(userService.updateInformation(user));
+    }
 }

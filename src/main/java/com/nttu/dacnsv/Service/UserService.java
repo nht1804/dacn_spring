@@ -91,6 +91,20 @@ public class UserService {
         return result;
     }
 
+    public ServiceResult updateInformation(User user){
+        ServiceResult result = new ServiceResult();
+        User u = userRepository.findByUserName(user.getUserName()).orElse(null);
+        if (u == null) {
+            result.setStatus(ServiceResult.Status.FAILED);
+            result.setMessage("UserName Not Found");
+        } else {
+            u.setInformation(user.getInformation());
+            userRepository.save(u);
+            result.setMessage("Success");
+        }
+        return result;
+    }
+
     public ServiceResult findById(String id) {
         ServiceResult result = new ServiceResult();
         User u = userRepository.findById(id).orElse(null);
