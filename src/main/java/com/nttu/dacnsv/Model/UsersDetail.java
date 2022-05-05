@@ -12,6 +12,10 @@ public class UsersDetail {
     private String address;
     private String number;
 
+    public enum Gender {
+        MALE, FEMALE, NONE
+    }
+
     public UsersDetail(String firstName, String lastName, LocalDate dateOfBirth, Gender gender, String address, String number) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,7 +26,7 @@ public class UsersDetail {
     }
 
     public UsersDetail() {
-        this.lastName =null;
+        this.lastName = null;
         this.dateOfBirth = LocalDate.now();
         this.gender = Gender.NONE;
         this.address = null;
