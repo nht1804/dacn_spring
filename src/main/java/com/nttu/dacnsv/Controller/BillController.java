@@ -20,21 +20,32 @@ public class BillController {
     }
 
     @PostMapping
-    public ResponseEntity<ServiceResult> addBill(@RequestBody Bill bill){
+    public ResponseEntity<ServiceResult> addBill(@RequestBody Bill bill) {
         return ResponseEntity.ok().body(service.add(bill));
     }
 
     @PutMapping
-    public ResponseEntity<ServiceResult> updateBill(@RequestBody Bill bill){
+    public ResponseEntity<ServiceResult> updateBill(@RequestBody Bill bill) {
         return ResponseEntity.ok().body(service.update(bill));
     }
+
     @DeleteMapping
-    public ResponseEntity<ServiceResult> deleteBill(@RequestBody String id){
+    public ResponseEntity<ServiceResult> deleteBill(@RequestBody String id) {
         return ResponseEntity.ok().body(service.delete(id));
     }
 
     @GetMapping("/status/{status}")
-    public ResponseEntity<ServiceResult> findBillByStatus(@PathVariable("status") String status){
+    public ResponseEntity<ServiceResult> findBillByStatus(@PathVariable("status") String status) {
         return ResponseEntity.ok().body(service.findByStatus(status));
     }
+
+    @GetMapping("/u={userName}&s={status}")
+    public ResponseEntity<ServiceResult> findBillByUserNameAndStatus(@PathVariable("userName") String userName, @PathVariable("status")String status) {
+        return ResponseEntity.ok().body(service.findByUserAndStatus(userName, status));
+    }
+    @GetMapping("/u={userName}")
+    public ResponseEntity<ServiceResult> findBillByUserName(@PathVariable("userName") String userName) {
+        return ResponseEntity.ok().body(service.findByUser(userName));
+    }
+
 }
