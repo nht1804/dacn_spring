@@ -1,6 +1,7 @@
 package com.nttu.dacnsv.Controller;
 
 import com.nttu.dacnsv.Model.Bill;
+import com.nttu.dacnsv.Request.DeleteByIdRequest;
 import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Service.BillService;
 import lombok.AllArgsConstructor;
@@ -30,13 +31,18 @@ public class BillController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ServiceResult> deleteBill(@RequestBody String id) {
-        return ResponseEntity.ok().body(service.delete(id));
+    public ResponseEntity<ServiceResult> deleteBill(@RequestBody DeleteByIdRequest req) {
+        return ResponseEntity.ok().body(service.delete(req.getId()));
     }
 
     @GetMapping("/status/{status}")
     public ResponseEntity<ServiceResult> findBillByStatus(@PathVariable("status") String status) {
         return ResponseEntity.ok().body(service.findByStatus(status));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ServiceResult> findBillById(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @GetMapping("/u={userName}&s={status}")

@@ -13,7 +13,7 @@ import java.util.List;
 public class Bill {
     @Id
     private String id;
-    private String customerID;
+        private String customerID;
     private String carID;
     private BillStatus status;
     private LocalDateTime createDate;

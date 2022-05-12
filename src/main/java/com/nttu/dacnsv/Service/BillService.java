@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -49,7 +50,11 @@ public class BillService {
     public ServiceResult findByStatus(String status) {
         ServiceResult result = new ServiceResult();
         result.setMessage("SUCCESS");
-        result.setData(repository.findByStatus(status));
+        if(status == null){
+            result.setData(repository.findAll());
+        }else{
+            result.setData(repository.findByStatus(status));
+        }
         return result;
     }
 
@@ -67,13 +72,18 @@ public class BillService {
 
     public ServiceResult findByUser(String userName) {
         ServiceResult result = new ServiceResult();
-        List<Bill> bills = repository.findByUser(userName,Sort.by(Sort.Direction.DESC, "createDate"));
+        List<Bill> bills = repository.findByUser(userName, Sort.by(Sort.Direction.DESC, "createDate"));
         if (bills.isEmpty()) {
             result.setMessage("No bills");
             result.setStatus(ServiceResult.Status.FAILED);
         } else {
             result.setData(bills);
         }
+        return result;
+    }
+    public ServiceResult findById(String id){
+        ServiceResult result = new ServiceResult();
+        repository.findById(id);
         return result;
     }
 }
