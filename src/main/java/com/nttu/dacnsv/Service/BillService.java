@@ -23,7 +23,6 @@ public class BillService {
         result.setMessage("SUCCESS");
         return result;
     }
-
     public ServiceResult add(Bill bill) {
         ServiceResult result = new ServiceResult();
         bill.setCreateDate(LocalDateTime.now());
