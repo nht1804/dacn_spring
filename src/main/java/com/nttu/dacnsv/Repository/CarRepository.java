@@ -1,6 +1,8 @@
 package com.nttu.dacnsv.Repository;
 
 import com.nttu.dacnsv.Model.Car;
+import com.nttu.dacnsv.Request.GroupResponse;
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -22,4 +24,8 @@ public interface CarRepository extends MongoRepository<Car,String> {
     List<Car> findByTransmission(String transmission);
     @Query("{'price':?0}")
     List<Car> findByPrice(String price);
+    @Aggregation(pipeline = {
+            "{ '$group':{ '_id' : null ,'count' :{ $count:{} }, 'total':{ '$sum': $total }}}"
+    })
+    GroupResponse carCount();
 }

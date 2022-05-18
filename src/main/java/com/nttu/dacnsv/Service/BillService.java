@@ -5,17 +5,19 @@ import com.nttu.dacnsv.Repository.BillRepository;
 import com.nttu.dacnsv.Request.ServiceResult;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+
 
 @Service
 @AllArgsConstructor
 public class BillService {
     private final BillRepository repository;
+    private final MongoTemplate mongoTemplate;
 
     public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
@@ -84,5 +86,8 @@ public class BillService {
         ServiceResult result = new ServiceResult();
         repository.findById(id);
         return result;
+    }
+
+    private class T {
     }
 }
