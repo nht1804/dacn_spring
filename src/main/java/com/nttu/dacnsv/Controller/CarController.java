@@ -38,6 +38,14 @@ public class CarController {
     public ResponseEntity<ServiceResult> findCarByHasDriver(@PathVariable("hasDriver") boolean hasDriver) {
         return ResponseEntity.ok().body(carService.findByHasDriver(hasDriver));
     }
+    @GetMapping("/HotCar")
+    public ResponseEntity<ServiceResult> getHotCarByHasDriver(@RequestParam("d") boolean d) {
+        return ResponseEntity.ok().body(carService.getHotCarByHasDriver(d));
+    }
+    @GetMapping("/random")
+    public ResponseEntity<ServiceResult> getHotCarByHasDriver(@RequestParam int size) {
+        return ResponseEntity.ok().body(carService.getRandomCar(size));
+    }
     @GetMapping("/seat/{seat}")
     public ResponseEntity<ServiceResult> findCarByHasDriver(@PathVariable("seat") int seat) {
         return ResponseEntity.ok().body(carService.findBySeat(seat));
@@ -49,6 +57,10 @@ public class CarController {
     @GetMapping("/id/{id}")
     public ResponseEntity<ServiceResult> findCarById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(carService.findById(id));
+    }
+    @GetMapping("/ManuFactor")
+    public ResponseEntity<ServiceResult> getAllManuFactor() {
+        return ResponseEntity.ok().body(carService.getCarManuFactor());
     }
 
     @PostMapping //insert a car to database

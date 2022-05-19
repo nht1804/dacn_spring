@@ -12,12 +12,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-
 @Service
 @AllArgsConstructor
 public class BillService {
     private final BillRepository repository;
-    private final MongoTemplate mongoTemplate;
 
     public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
@@ -25,6 +23,8 @@ public class BillService {
         result.setMessage("SUCCESS");
         return result;
     }
+
+
     public ServiceResult add(Bill bill) {
         ServiceResult result = new ServiceResult();
         bill.setCreateDate(LocalDateTime.now());
@@ -51,9 +51,9 @@ public class BillService {
     public ServiceResult findByStatus(String status) {
         ServiceResult result = new ServiceResult();
         result.setMessage("SUCCESS");
-        if(status == null){
+        if (status == null) {
             result.setData(repository.findAll());
-        }else{
+        } else {
             result.setData(repository.findByStatus(status));
         }
         return result;
@@ -82,12 +82,11 @@ public class BillService {
         }
         return result;
     }
-    public ServiceResult findById(String id){
+
+    public ServiceResult findById(String id) {
         ServiceResult result = new ServiceResult();
         repository.findById(id);
         return result;
     }
 
-    private class T {
-    }
 }

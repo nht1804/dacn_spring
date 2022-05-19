@@ -12,13 +12,13 @@ public class Car {
     @Id
     private String id;
     private String name;
-    private String price;
+    private int price;
     private CarDetail detail;
     private List<String> image;
     private Boolean status;
     private int count;
 
-    public Car(String name, String price, CarDetail detail, List<String> image, Boolean status) {
+    public Car(String name, int price, CarDetail detail, List<String> image, Boolean status) {
         this.name = name;
         this.price = price;
         this.detail = detail;
@@ -42,11 +42,11 @@ public class Car {
         this.name = name;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

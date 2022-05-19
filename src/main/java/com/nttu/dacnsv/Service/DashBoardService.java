@@ -9,6 +9,8 @@ import com.nttu.dacnsv.Request.ServiceResult;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Example;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -64,16 +66,16 @@ public class DashBoardService {
         return result;
     }
 
-    public ServiceResult carCount() {
-        ServiceResult result = new ServiceResult();
-        result.setMessage("SUCCESS");
-        result.setData(carRepository.carCount());
-        return result;
-    }
     public ServiceResult billCountLast7DaysFrom(LocalDate from, LocalDate to) {
         ServiceResult result = new ServiceResult();
         result.setMessage("SUCCESS");
         result.setData(billRepository.billCountLast7DaysFrom(from.toString(), to.toString()));
+        return result;
+    }
+    public ServiceResult carCount() {
+        ServiceResult result = new ServiceResult();
+        result.setMessage("SUCCESS");
+        result.setData(carRepository.carCount());
         return result;
     }
 }

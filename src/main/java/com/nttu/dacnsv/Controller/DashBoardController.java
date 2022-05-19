@@ -51,7 +51,6 @@ public class DashBoardController {
     public ResponseEntity<ServiceResult> userTotal() {
         return ResponseEntity.ok().body(dashBoardService.userCount());
     }
-
     @GetMapping("/Car/total")
     public ResponseEntity<ServiceResult> carTotal() {
         return ResponseEntity.ok().body(dashBoardService.carCount());

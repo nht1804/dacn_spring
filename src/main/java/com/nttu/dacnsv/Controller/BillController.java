@@ -53,5 +53,4 @@ public class BillController {
     public ResponseEntity<ServiceResult> findBillByUserName(@PathVariable("userName") String userName) {
         return ResponseEntity.ok().body(service.findByUser(userName));
     }
-
 }

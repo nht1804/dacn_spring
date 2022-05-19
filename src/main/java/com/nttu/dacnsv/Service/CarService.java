@@ -1,24 +1,44 @@
 package com.nttu.dacnsv.Service;
 
 import com.nttu.dacnsv.Model.Car;
+import com.nttu.dacnsv.Request.GroupResponse;
 import com.nttu.dacnsv.Request.ServiceResult;
 import com.nttu.dacnsv.Repository.CarRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 @Service
 @AllArgsConstructor
 public class CarService {
     private final CarRepository carRepository;
+    private MongoTemplate mongoTemplate;
 
     public ServiceResult getAll() {
         ServiceResult result = new ServiceResult();
         result.setData(carRepository.findAll());
         return result;
     }
-
+    public ServiceResult getHotCarByHasDriver(boolean hasDriver) {
+        ServiceResult result = new ServiceResult();
+        result.setData(carRepository.getHotCarByHasDriver(hasDriver,Sort.by(Sort.Direction.DESC, "count")));
+        result.setMessage("SUCCESS");
+        return result;
+    }
+    public ServiceResult getRandomCar(int size) {
+        ServiceResult result = new ServiceResult();
+        Aggregation aggregation = newAggregation(Aggregation.sample(size));
+        result.setData(mongoTemplate.aggregate(aggregation,"Car",Car.class).getMappedResults());
+        result.setMessage("SUCCESS");
+        return result;
+    }
     public ServiceResult insert(Car car) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findByName(car.getName()).orElse(null);
@@ -122,18 +142,7 @@ public class CarService {
         }
         return result;
     }
-    public ServiceResult findByPrice(String price) {
-        ServiceResult result = new ServiceResult();
-        List<Car> c = carRepository.findByPrice(price);
-        if (c.isEmpty()) {
-            result.setStatus(ServiceResult.Status.FAILED);
-            result.setMessage("Not Found");
-        } else {
-            result.setMessage("Success");
-            result.setData(c);
-        }
-        return result;
-    }
+
     public ServiceResult findByName(String name) {
         ServiceResult result = new ServiceResult();
         Car c = carRepository.findByName(name).orElse(null);
@@ -144,6 +153,14 @@ public class CarService {
             result.setMessage("Success");
             result.setData(c);
         }
+        return result;
+    }
+
+    public ServiceResult getCarManuFactor() {
+        ServiceResult result = new ServiceResult();
+        result.setMessage("SUCCESS");
+        Aggregation aggregation = newAggregation(Aggregation.group("$detail.manufacturer").count().as("count").count().as("total"));
+        result.setData(mongoTemplate.aggregate(aggregation,"Car", GroupResponse.class).getMappedResults());
         return result;
     }
 
